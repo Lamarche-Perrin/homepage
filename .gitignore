@@ -1,0 +1,11 @@
+header
+add_header
+
+# make_CV
+make_CV/*
+
+# Temp files
+*~
+\#*\#
+*.backup
+
