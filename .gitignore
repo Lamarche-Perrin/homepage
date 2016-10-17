@@ -1,5 +1,6 @@
 header
 add_header
+export_homepage
 
 # make_CV
 make_CV/*
