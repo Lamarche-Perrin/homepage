@@ -9,7 +9,7 @@
 <meta name="generator" content="pandoc" />
 
 
-<meta name="author" content="réalisée le 16 avril 2019" />
+<meta name="author" content="réalisée le 16 avril 2019, éditée le 22 avril 2019" />
 <meta name="author" content="par Robin Lamarche-Perrin (https://www-complexnetworks.lip6.fr/~lamarche)" />
 <meta name="author" content="avec l’aide de Manon Bril (https://www.youtube.com/channel/UCKjDY4joMPcoRMmd-G1yz1Q)" />
 
@@ -192,7 +192,7 @@ $(document).ready(function () {
 
 
 <h1 class="title toc-ignore">Brève analyse des financements versés aux chaînes YouTube via la plateforme Tipeee</h1>
-<h4 class="author">réalisée le 16 avril 2019</h4>
+<h4 class="author">réalisée le 16 avril 2019, éditée le 22 avril 2019</h4>
 <h4 class="author">par Robin Lamarche-Perrin (<a href="https://www-complexnetworks.lip6.fr/~lamarche" class="uri">https://www-complexnetworks.lip6.fr/~lamarche</a>)</h4>
 <h4 class="author">avec l’aide de Manon Bril (<a href="https://www.youtube.com/channel/UCKjDY4joMPcoRMmd-G1yz1Q" class="uri">https://www.youtube.com/channel/UCKjDY4joMPcoRMmd-G1yz1Q</a>)</h4>
 
@@ -234,6 +234,19 @@ $(document).ready(function () {
 <li><code>tips</code> : montant total des dons mensuels sur Tipeee</li>
 </ul>
 <p>La variable <code>gender</code> a été encodée manuellement. Elle désigne le genre de la personne ayant créé la chaîne ou étant majoritairement responsable de son contenu : <code>M</code> pour masculin, <code>F</code> pour féminin, et <code>N</code> dans le cas où le genre n’est pas identifiable (8 cas sur 83 correspondant à des collectifs mixtes de créateurices).</p>
+<hr />
+</div>
+<div id="disclaimer" class="section level3">
+<h3><em>Disclaimer</em></h3>
+<p>Cette étude s’intéresse à l’hypothèse suivante : “les vidéastes femmes sont mieux rémunérées que les vidéastes hommes sur Tipeee.”</p>
+<p>Elle montre à ce sujet (<em>spoiler alert</em>) que les données recueillies invalident cette hypothèse : le genre ne permet pas d’expliquer de manière significative les variations de revenus observées.</p>
+<p>Attention cependant :</p>
+<ul>
+<li><p>On observe bien des différences de revenus entre les différentes chaînes YouTube. Cette étude ne prétend pas expliquer ces différences. Elle prétend montrer en revanche ce qui ne les explique pas : le genre. Comme souvent en science, il s’agit de réfuter une hypothèse, non d’en valider une.</p></li>
+<li><p>Ce résultat n’est valable que pour la variable observée : les dons mensuels sur Tipeee. En particulier, le temps de travail, la qualité du contenu, son éventuelle valeur marchande, <em>etc.</em>, ne sont pas prises en compte. Il serait ainsi intéressant de généraliser cette étude à d’autres définitions du revenu.</p></li>
+<li><p>Ce résultat n’est valable que pour le corpus considéré : les 83 comptes Tipeee retenus ci-dessus. En particulier, il s’agit des vidéastes les mieux rémunéré·e·s et il est possible que des corrélations entre genre et revenu soient observables pour d’autres corpus. Il serait ainsi intéressant de généraliser cette étude à un plus grand panel.</p></li>
+</ul>
+<p>Pour résumer, cette étude présente un résultat négatif : <em>le genre ne permet pas d’expliquer les variations de dons mensuels observées sur Tipeee pour les 83 chaînes YouTube les mieux rémunérées.</em></p>
 <hr />
 </div>
 <div id="analyse" class="section level3">
@@ -323,7 +336,7 @@ summary (reg)</code></pre>
 ## Residual standard error: 0.2823 on 72 degrees of freedom
 ## Multiple R-squared:  0.714,  Adjusted R-squared:  0.706 
 ## F-statistic: 89.86 on 2 and 72 DF,  p-value: &lt; 2.2e-16</code></pre>
-<p>Cette seconde regression nous indique que la variable de genre ne permet pas d’expliquer les variations restantes, ni dans un sens, ni dans l’autre. La variable est même extrêmement peu significative (<em>p-value</em> supérieure à 0,50). Ainsi, si l’on considère les dons mensuels moyens comme un marqueur de revenu, et en considérant un simple modèle linéaire pour comparer les dons associés à deux chaînes différentes, il est impossible de dire avec ces données que les femmes gagnent plus ou moins que les hommes sur Tipeee.</p>
+<p>Cette seconde regression nous indique que la variable de genre ne permet pas d’expliquer les variations restantes, ni dans un sens, ni dans l’autre. La variable est même extrêmement peu significative (<em>p-value</em> supérieure à 0,50). Ainsi, si l’on considère les dons mensuels moyens comme un marqueur de revenu, et en considérant un simple modèle linéaire pour comparer les dons associés à deux chaînes différentes, <em>il est impossible de dire avec ces données que les femmes gagnent plus (ou moins) que les hommes sur Tipeee</em>.</p>
 <p>Notez que le raisonnement est toujours valide lorsque l’on considère les dons mensuels moyens rapportés au nombre de donateurices sur Tipeee (ce que fait Stéphane Édouard dans sa troisième vidéo). La variable de genre est d’aileurs encore moins significative (<em>p-value</em> supérieure à 0,81).</p>
 <pre class="r"><code>reg &lt;- lm (log10 (tips/tippers) ~ log10 (tippers) + gender, data2)
 summary (reg)</code></pre>
