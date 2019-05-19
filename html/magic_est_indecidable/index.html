@@ -1,0 +1,202 @@
+<div style="width:700px;text-align:justify;margin:50">
+  <h2>Magic: The Gathering est indécidable</h2><br>
+  Un article a récemment annoncé une chose incroyable. <a href="https://arxiv.org/abs/1904.09828" class="postlink" target="_blank" rel="nofollow"><i>Magic: The Gathering is Turing Complete.</i></a><br/><br/>
+  
+  J'ai commencé à lire l'article... et voici la première situation de jeu qui y est présentée : que se passe-t-il si on joue un <a href="http://www.magiccorporation.com/gathering-cartes-view-8732-ogre-menacant.html" class="postlink" target="_blank" rel="nofollow">Ogre menaçant</a> alors que <i>les deux</i> joueureuses possèdent, chacun et chacune, une <a href="http://www.magiccorporation.com/gathering-cartes-view-1760-lich.html" class="postlink" target="_blank" rel="nofollow">Lich</a>, une <a href="http://www.magiccorporation.com/gathering-cartes-view-7163-transcendance.html" class="postlink" target="_blank" rel="nofollow">Transcendance</a>, et un <a href="http://www.magiccorporation.com/gathering-cartes-view-19860-maniaque-de-laboratoire.html" class="postlink" target="_blank" rel="nofollow">Maniaque de laboratoire</a> ? <img src="icon_razz.gif" alt="Razz" longdesc="9"><br><br>Je vous laisse vous en convaincre en lisant l'effet des cartes, mais en gros la situation se résume à "<a href="https://www.scottaaronson.com/writings/bignumbers.html" class="postlink" target="_blank" rel="nofollow"><i>Who Can Name the Bigger Number</i></a>". Le joueur ou la joueuse qui choisit secrètement le plus grand nombre gagne la partie.<br><br><br><h3>Bon, de quoi s'agit-il ?</h3>Une
+ des grandes questions de la théorie des jeux est celle des stratégies 
+optimales : quelle est la séquence d'actions, fonction de celles de vos 
+adversaires, qui vous garantit la meilleure issue possible ? Or, pour de
+ nombreux jeux de stratégie combinatoire classiques (morpion, échecs, 
+go), John von Neumann a montré au début du XXe siècle avec son <a href="https://fr.wikipedia.org/wiki/Th%C3%A9or%C3%A8me_du_minimax_de_von_Neumann" class="postlink" target="_blank" rel="nofollow">théorème du minimax</a> (aussi appelé <i>théorème fondamental de la théorie des jeux à deux joueureuses</i> <img src="icon_cool.gif" alt="Cool" longdesc="6">) qu'il existe un algorithme (relativement simple) permettant de <i>calculer</i> ces stratégies optimales.<br><br>On
+ a donc à notre disposition un algorithme permettant de jouer aux échecs
+ de manière optimale... et donc de décider, avant même que la partie ne 
+commence, quelle en sera l'issue si les deux adversaires exploitent 
+justement cette stratégie optimale. Seulement, la combinatoire de la 
+plupart des jeux de stratégie est telle qu'en pratique on ne peut 
+directement appliquer la méthode... beaucoup, beaucoup trop coûteuse. On
+ mesure alors la complexité des jeux de stratégie en fonction de la 
+quantité de calcul qu'il faudrait réaliser pour ce faire, et on peut 
+ainsi les classer en déterminant lesquels sont les plus "difficiles" à 
+résoudre du point de vue de la théorie des jeux.<br><br>Dans cet 
+article, il s'agit de montrer que Magic appartient à une toute autre 
+classe de problèmes combinatoires. Une classe de problèmes auxquels on 
+ne <i>peut pas</i> appliquer l'algorithme du minimax pour en connaître 
+l'issue, ni aucun autre algorithme d'ailleurs. Une classe de problèmes 
+que l'on nomme <i>indécidables</i>.<br><br>(Notez en passant que le fait
+ que Magic est un jeu à information incomplète, contrairement aux 
+échecs, n'est pas la cause de cette indécidabilité. Il existe des 
+versions probabilistes du théorème du minimax qui permettent d'également
+ résoudre des jeux comme le poker, donnant ainsi une stratégie optimale <i>en probabilité</i>,
+ c'est-à-dire sur le plan statistique / sur un très grand nombre de 
+parties. Concernant toutes ces questions, je vous renvoie aux trois 
+épisodes d'Aléa sur l'<a href="http://www.divergence-fm.org/index.php?page=accueil.php?p=7&amp;f=aa" class="postlink" target="_blank" rel="nofollow">incertitude dans les jeux</a>, <i>cf.</i> l'avant dernière page sur le site de la radio.)<br><br><br><h3>Les machines de Turing</h3>Pour montrer que Magic est un jeu indécidable, il faut commencer par comprendre ce qu'est une <a href="https://fr.wikipedia.org/wiki/Machine_de_Turing" class="postlink" target="_blank" rel="nofollow">machine de Turing</a>.<br><br><dl class="codebox"><dt><span class="genmed"><b>Wikipédia a écrit :</b></span></dt><dd class="quote">En
+ informatique théorique, une machine de Turing est un modèle abstrait du
+ fonctionnement des appareils mécaniques de calcul, tel un ordinateur. 
+Ce modèle a été imaginé par Alan Turing en 1936, en vue de donner une 
+définition précise au concept d’algorithme ou de "procédure mécanique". 
+Il est toujours largement utilisé en informatique théorique, en 
+particulier dans les domaines de la complexité algorithmique et de la 
+calculabilité.</dd></dl><br>Turing est connu pour de nombreuses choses, mais on oublie souvent son travail le plus important : la notion de <i>calculabilité</i>
+ qui fait de lui un des fondateurs de l'informatique au sens large, 
+avant qu'il ne devienne également un des fondateurs de l'intelligence 
+artificielle avec le fameux test de Turing.<br><br>Un gros, une machine 
+de Turing est la description formelle d'une machine capable 
+d'implémenter (c'est-à-dire de réaliser physiquement) n'importe quel 
+algorithme.<br><br>Pour cela, il vous faudra :<br><br>1. Un <i>ruban</i>
+ qui constitue la mémoire de votre machine. Imaginez une longue bande de
+ papier, scindée en cases numérotées dans lesquelles on peut inscrire 
+différents symboles pour y encoder (à la fois) le programme et le 
+résultat du calcul.<br><br>2. Une <i>tête de lecture et d'écriture</i> 
+qui permet de modifier les symboles inscrits sur le ruban. Imaginez 
+simplement votre main munie d'une gomme et d'un crayon à papier qui se 
+porte successivement sur les différentes cases du ruban. C'est donc le 
+mécanisme qui vient modifier la mémoire de la machine, en un point 
+précis.<br><br>3. Un <i>contrôleur</i> qui détermine les actions devant 
+être réalisées en fonction de l'état actuel du ruban et de la case sous 
+la tête de lecture. Imaginez un gros dictionnaire de règles vous disant 
+où porter votre crayon et comment modifier les symboles. C'est le 
+mécanisme (déterministe) qui permet de réaliser le calcul. En gros, 
+c'est le processeur.<br><br>Lorsque tous ces éléments sont réunis, on parle de machine <i>universelle</i>,
+ au sens où elle peut être configurée pour réaliser n'importe quelle 
+fonction calculable (faire une division euclidienne, calculer les 
+décimales de pi, implémenter <i>Super Mario Bros.</i>). Le meilleur exemple est aujourd'hui... l'ordinateur. Mais il en existe d'autres : il a été montré que <i>Minecraft</i> est Turing-complet, c'est-à-dire que ses possibilités de calcul (avec les circuits de <i>redstone</i>) sont suffisantes pour réaliser n'importe quelle fonction calculable. Il est donc en théorie possible d'implémenter <i>Minecraft</i> dans <i>Minecraft</i>. Nolan n'a plus qu'à aller se rhabiller.<br><br>Ici, donc, il s'agit de montrer que Magic est Turing-complet.<br><br><br><h3>De quoi ?!</h3>Pour réaliser une machine de Turing avec un deck de cartes Magic, il vous faudra donc :<br><br>1.
+ Construire le ruban, et donc encoder un programme de calcul et son 
+résultat au sein même du champ de bataille. Pour cela, on utilise des 
+tokens de différentes couleurs, différentes forces et different types. 
+Des tokens verts réalisent les cases à gauche de la tête de lecture (un 
+token 2/2 vert pour la case actuellement sous la tête de lecture, un 
+token 3/3 vert pour la première case à gauche, un token 4/4 vert pour la
+ deuxième case à gauche, <i>etc.</i>). Des tokens blancs réalisent les 
+cases à droite de la tête de lecture (un token 3/3 blanc pour la 
+première case à droite de la tête de lecture, un token 4/4 blanc pour la
+ deuxième case à droite, <i>etc.</i>). Enfin, le type de ces tokens 
+permet de représenter les symboles inscrits sur ces cases. La machine 
+réalisée dans l'article possède un vocabulaire de 18 symboles, 
+représentés donc par 18 types de créature : Aetherborn, Basilisk, 
+Cephalid, Demon, Elf, Faerie, Giant, Harpy, Illusion, Juggernaut, Kavu, 
+Leviathan, Myr, Noggle, Orc, Pegasus, Rhino, et Sliver.<br><br>La 
+présence d'un token 5/5 blanc Giant sur le champ de bataille indique 
+donc que la 4e case du ruban, à droite de la tête de lecture, contient 
+le symbole G.<br><br>2. Pour lire l'état d'une case et déplacer la tête de lecture, on utilise ensuite les sorts suivants :<br><br>- <a href="http://www.magiccorporation.com/gathering-cartes-view-8709-infestation.html" class="postlink" target="_blank" rel="nofollow">Infest</a>
+ pour tuer le seul token 2/2 (celui réalisant la case sous la tête de 
+lecture) et enclencher la lecture du symbole correspondant (<i>cf.</i> la manière dont fonctionne le contrôleur ci-dessous).<br><br>- <a href="http://www.magiccorporation.com/gathering-cartes-view-11357-rayon-purificateur.html" class="postlink" target="_blank" rel="nofollow">Cleansing Beam</a>, <a href="http://www.magiccorporation.com/gathering-cartes-view-14122-ardeur.html" class="postlink" target="_blank" rel="nofollow">Vigor</a> et <a href="http://www.magiccorporation.com/gathering-cartes-view-15183-%C3%89teigneurs-dames.html" class="postlink" target="_blank" rel="nofollow">Soul Snuffers</a>
+ pour ajouter un marqueur +1/+1 sur toutes les créatures vertes et un 
+marqueur -1/-1 sur toutes les créatures blanches (et donc pour déplacer 
+la tête de lecture d'un cran vers la droite, ou vers la gauche si on 
+inverse les couleurs).<br><br>3. Pour modifier l'état du champ de 
+bataille, c'est-à-dire l'état du ruban, il nous faut enfin un 
+contrôleur. Celui-ci est implémenté en utilisant un <a href="http://www.magiccorporation.com/gathering-cartes-view-8777-reanimateur-pouminfect.html" class="postlink" target="_blank" rel="nofollow">Rotlung Reanimator</a> sur lequel on lance deux <a href="http://www.magiccorporation.com/gathering-cartes-view-8563-%C3%89volution-artificielle.html" class="postlink" target="_blank" rel="nofollow">Artificial Evolutions</a> et un <a href="http://www.magiccorporation.com/gathering-cartes-view-15160-teintillusion.html" class="postlink" target="_blank" rel="nofollow">Teintillusion</a> pour en modifier le texte comme bon nous semble. Par exemple : "Quand le <a href="http://www.magiccorporation.com/gathering-cartes-view-8777-reanimateur-pouminfect.html" class="postlink" target="_blank" rel="nofollow">Rotlung Reanimator</a> ou un autre Aetherborn meurt, mettez en jeu sous votre contrôle un jeton créature 2/2 blanc Sliver."<br><br>Ce
+ qui signifie, du point de vue du programme : "Quand la case sous la 
+tête de lecture contient le symbole A, remplacez le par le symbole S."<br><br>En fait, il y a autant de <a href="http://www.magiccorporation.com/gathering-cartes-view-8777-reanimateur-pouminfect.html" class="postlink" target="_blank" rel="nofollow">Rotlung Reanimators</a>
+ en jeu que nécessaire, tous ajustés de manière différente pour 
+implémenter les différentes règles de contrôle (si j'ai tel symbole sous
+ la tête de lecture, alors je le remplace par tel autre symbole). Dans 
+le programme présenté dans l'article, il y a 18 règles, donc 18 <a href="http://www.magiccorporation.com/gathering-cartes-view-8777-reanimateur-pouminfect.html" class="postlink" target="_blank" rel="nofollow">Rotlung Reanimators</a>. (En fait, il y en a 27, plus 7 <a href="http://www.magiccorporation.com/gathering-cartes-view-23843-necromancien-xathrid.html" class="postlink" target="_blank" rel="nofollow">Xathrid Necromancers</a>, dont la moitié ont préalablement été ciblés par des <a href="http://www.magiccorporation.com/gathering-cartes-view-4552-cape-dinvisibilite.html" class="postlink" target="_blank" rel="nofollow">Cloaks of Invisibility</a> afin d'implémenter ce que les auteurices appellent le <i>second state</i>
+ de la machine, qui a donc deux états de mémoire, en utilisant le fait 
+que certains tokens sont engagés et d'autres non, et que certaines 
+créatures sont hors phase et d'autre non... mais bref.)<br><br>Enfin, 
+pour que ce processus de lecture et d'écriture soit entièrement 
+déterministe, pour que la machine fonctionne donc indépendamment de la 
+volonté des deux joueureuses, il faut également supposer que certaines 
+cartes sont en jeu pour justement obliger les joueureuses à réaliser ce 
+processus (<a href="http://www.magiccorporation.com/gathering-cartes-view-18014-%C3%89vocation-sauvage.html" class="postlink" target="_blank" rel="nofollow">Wild Evocation</a>), d'autres pour que les cartes reviennent dans la librairie et puissent être ainsi jouées indéfiniment (<a href="http://www.magiccorporation.com/gathering-cartes-view-15044-roue-soleil-lune.html" class="postlink" target="_blank" rel="nofollow">Wheel of Sun and Moon</a>), d'autres pour imposer certaines cibles et ne pas casser toutes la machinerie avec un sort mal placé (<a href="http://www.magiccorporation.com/gathering-cartes-view-8822-determination-dacier.html" class="postlink" target="_blank" rel="nofollow">Steely Resolve</a>) ou encore pour empêcher toute autre action de jeu (<a href="http://www.magiccorporation.com/gathering-cartes-view-11243-archonte-brulant.html" class="postlink" target="_blank" rel="nofollow">Blazing Archon</a> chez les deux joueureuses, <a href="http://www.magiccorporation.com/gathering-cartes-view-6797-recyclage.html" class="postlink" target="_blank" rel="nofollow">Recycle</a> chez une des deux joueureuses, <a href="http://www.magiccorporation.com/gathering-cartes-view-6608-suffocation.html" class="postlink" target="_blank" rel="nofollow">Choke</a> pour empêcher l'utilisation de certains terrains, <i>etc.</i>).<br><br>Et pas mal d'autres subtilités que je ne vais pas détailler ici.<br><br><br>Bref,
+ de cette manière, avec une configuration bien, bien, bien spécifique 
+(tokens et créatures en jeu, préalablement ajustées par des 
+enchantements et éphémères, mains et cimetières déterminés, ordre précis
+ des cartes dans les deux librairies), on arrive à une situation de jeu 
+où plus rien n'est laissé au choix des joueureuses. Du fait des cartes 
+en présence, on entre dans une séquence déterministe (chaque paire de 
+tours correspondant à la lecture et à l'écriture d'un nouveau symbole) 
+qui suit les règles de la machine et du programme implémentés.<br><br>Ainsi,
+ si on interprète l'état du champ de bataille comme un ruban contenant 
+divers symboles, on réalise... un calcul : en fonction de l'état de ce 
+ruban au moment où la séquence se lance, les symboles sont modifiés de 
+manière contrôlée. Et lorsque la machine s'arrête, on peut lire le 
+résultat du calcul sur le champ de bataille. Sachant qu'il s'agit d'une 
+machine de Turing <i>universelle</i>, on peut en fait réaliser n'importe
+ quelle fonction calculable. Vous pouvez donc faire une division 
+euclidienne, calculer les décimales de pi, ou même jouer à <i>Super Mario Bros.</i> avec un deck de 60 cartes (jouable en Legacy).<br><br><br><h3>Ok, c'est chelou, mais qu'est-ce que ça change ?</h3>En mathématique, on dit d'une proposition (par exemple, "42 est un nombre premier") qu'elle est <i>décidable</i>
+ si on peut la démontrer ou démontrer sa négation (par exemple, "2 * 3 *
+ 7 = 42, donc 42 n'est pas un nombre premier"). Au contraire, une 
+proposition est indécidable s'il n'existe aucune manière de montrer 
+qu'elle est vraie ou fausse.<br><br>Ça peut paraître étrange, mais dans 
+les années 30, plusieurs travaux ont montré qu'il existait des énoncés 
+mathématiques indécidables. Le résultat le plus connu est sans doute le <a href="https://fr.wikipedia.org/wiki/Th%C3%A9or%C3%A8mes_d%27incompl%C3%A9tude_de_G%C3%B6del" class="postlink" target="_blank" rel="nofollow">théorème d'incomplétude de Gödel</a>
+ qui établit en 1931 qu'"une théorie suffisante pour y démontrer les 
+théorèmes de base de l'arithmétique est nécessairement incomplète, au 
+sens où il existe des énoncés qui n'y sont ni démontrables, ni 
+réfutables."<br><br>Bref, les mathématiciens et mathématiciennes sont dans une sacrée merde.<br><br>La version informatique de l'indécidabilité a ensuite été mise en évidence par Turing en 1932 avec le <a href="https://fr.wikipedia.org/wiki/Probl%C3%A8me_de_l%27arr%C3%AAt" class="postlink" target="_blank" rel="nofollow">problème de l'arrêt</a>.
+ Il s'agit de répondre au problème suivant : "voici une machine de 
+Turing, implémentant un programme donné, et voici l'état du ruban au 
+moment où la machine se lance. Question : est-ce qu'elle va s'arrêter un
+ jour ?"<br><br>Oui, parce qu'il existe bien évidemment des programmes 
+qui ne s'arrêtent jamais. Qui bouclent à l'infini. Par exemple, 
+celui-qui dit : "lis la case actuelle, ne la modifie pas, et reste sur 
+cette case". Et on aimerait donc en quelques sortes savoir s'il existe 
+un programme permettant de savoir si les programmes (donnés en entrée) 
+s'arrêtent ou non.<br><br>On sens déjà qu'il y a embrouille quand on 
+voit qu'il y a mise en abîme. L'effondrement des mathématiques 
+hilbertiennes repose la plupart du temps sur un problème de réflexivité 
+des énoncés : les <a href="https://fr.wikipedia.org/wiki/Paradoxe_de_Russell" class="postlink" target="_blank" rel="nofollow">ensembles d'ensembles</a> qui a failli pousser Russell au suicide, ou plus simplement le <a href="https://fr.wikipedia.org/wiki/Paradoxe_du_menteur" class="postlink" target="_blank" rel="nofollow">paradoxe du menteur</a> qui a fait de même avec je ne sais plus quel logicien grec. Tu lui disais "je mens" et il fondait en larmes.<br><br>Ici,
+ on fait un peu la même chose. On suppose qu'il existe un programme 
+capable de déterminer, pour n'importe quel programme, si celui-ci va 
+s'arrêter ou non, et on lui demande s'il va lui même s'arrêter. Et là...
+ la machine bugue et avec elle toute l'arithmétique.<br><br>Bref, il y a des choses qu'on ne <i>peut pas</i>
+ calculer. En particulier, il n'existe aucune méthode permettant de 
+déterminer, pour toute machine de Turing, si elle va s'arrêter ou non.<br><br><br><h3>Ok, mais je ne vois plus trop le rapport avec la choucroute</h3>Bon, revenons à la question initiale : je joue à Magic et j'aimerais juste savoir comment gagner.<br><br>Maintenant
+ qu'on sait que l'on peut implémenter n'importe quel programme dans une 
+situation de jeu (absurde, je vous l'accorde, mais quand même), les 
+auteurices de l'article y apportent un dernier twist. En utilisant une <a href="http://www.magiccorporation.com/gathering-cartes-view-3420-victoire-coalition.html" class="postlink" target="_blank" rel="nofollow">Coalition Victory</a>, un <a href="http://www.magiccorporation.com/gathering-cartes-view-4713-voile-prismatique.html" class="postlink" target="_blank" rel="nofollow">Prismatic Lace</a>, un <a href="http://www.magiccorporation.com/gathering-cartes-view-14927-augure-prismatique.html" class="postlink" target="_blank" rel="nofollow">Prismatic Omen</a> et une <a href="http://www.magiccorporation.com/gathering-cartes-view-166-%C3%8Ele.html" class="postlink" target="_blank" rel="nofollow">Island</a>,
+ on peut se débrouiller pour que la séquence déterministe du programme 
+implémenté s'achève par la victoire du joueur A lorsqu'un état 
+particulier est atteint.<br><br>Mais si l'état en question n'est jamais 
+atteint, c'est qu'on est entré dans une boucle déterministe infinie. Ce 
+qui est qualifié de match nul par la <a href="https://blogs.magicjudges.org/rules/cr104/" class="postlink" target="_blank" rel="nofollow">règle 104.4b</a>.<br><br><dl class="codebox"><dt><span class="genmed"><b>L'auteur taré de Magic a écrit :</b></span></dt><dd class="quote">104.4b
+ If a game that’s not using the limited range of influence option 
+(including a two-player game) somehow enters a “loop” of mandatory 
+actions, repeating a sequence of events with no way to stop, the game is
+ a draw. Loops that contain an optional action don’t result in a draw.</dd></dl><br>Bref, si le programme s'arrête, le joueur A gagne, sinon il y a draw.<br><br>Mais
+ comme il n'existe aucune méthode permettant de déterminer, dans le cas 
+général, si un programme va s'arrêter ou non, et comme notre deck est 
+Turing-complet, signifiant qu'il peut implémenter n'importe quel 
+programme... et bien il n'existe aucun moyen de déterminer l'issue de 
+toutes les parties possibles.<br><br>Aucun théorème de stratégie optimale. Aucun algorithme indiquant <i>pour toute configuration de jeu</i>
+ si la partie va s'achever par une victoire du joueur A, ou si elle va 
+indéfiniment continuer... et être ainsi requalifiée de match nul.<br><br>L'issue d'une partie de Magic est donc indécidable.<br><br>Ça veut dire que, contrairement aux échecs, au go, au poker, à ce que vous voulez, on ne <i>peut pas</i> calculer de stratégie optimale à Magic. Même en théorie.<br><br>Victoire par KO.<br><br><br><br>Pour
+ finir, j'aime beaucoup les recommandations des trois auteurices pour 
+constituer un deck ayant une chance de sortir la machine de Turing tour 1
+ en Legacy.<br><br><dl class="codebox"><dt><span class="genmed"><b>Alex, Stella et Austin ont écrit :</b></span></dt><dd class="quote">While
+ there are practical difficulties involved with correctly setting up the
+ necessary board state, such as running out of space on your table, a 
+sufficiently tenacious player could set up and execute this construction
+ in a real-world tournament game of <i>Magic: The Gathering</i>. An 
+example 60-card deck that is capable of executing this construction on 
+the first turn of the game and which is legal in the competitive Legacy 
+format can be seen in Table III.<br><br>With the correct draw, the deck 
+uses Ancient Tomb and three Lotus Petals to play Grim Monolith and Power
+ Artifact and generate unlimited colourless mana, at which point Staff 
+of Domination draws the rest of the deck and Gemstone Array generates 
+unlimited coloured mana. The deck casts most of the permanents 
+immediately, and uses Stolen Identity to make token copies of them 
+(using Memnarch first on the enchantments like Cloak of Invisibility). 
+The tape is initialised with Riptide Replicator and Capsize. Djinn 
+Illuminatus or Reito Lantern allow repeated casting of the 
+text-modification cards, as well as Reality Ripple which sets the phase 
+of the Rotlung Reanimators and Donate which gives most permanents to 
+Bob. Once everything is set up, Steely Resolve is cast, and then Karn 
+Liberated and Capsize are used to exile all setup permanents and all 
+cards from Bob’s hand, eventually exiling Capsize and Karn Liberated 
+themselves.<br><br>Now no player has any remaining choices except to let
+ the Turing machine execute. In addition to the Comprehensive Rules 
+[16], play at sanctioned <i>Magic: The Gathering</i> tournaments is also
+ governed by the Tournament Rules [17]. Some of these rules, most 
+notably the ones involving slow play, may effect an individual’s ability
+ to successfully execute the combo due to concerns about the sheer 
+amount of time it would take to manually move the tokens around to 
+simulate a computation on a Turing machine. This would not be a concern 
+for two agents with sufficiently high computational power, as the 
+Tournament Rules also provide a mechanism called “shortcuts” for players
+ to skip carrying out laborious loops if both players agree on the game 
+																																																												  state at the beginning and the end of the shortcut.</dd></dl><br><img src="herz.png" alt="I love you" longdesc="24"> <img src="herz.png" alt="I love you" longdesc="24"> <img src="herz.png" alt="I love you" longdesc="24"></div><div class="clear">
+																																																													  <div style="width:700px;text-align:right;margin:50"><b><a href="https://www-complexnetworks.lip6.fr/~lamarche/" class="postlink" target="_blank" rel="nofollow">Robin LP</a>, le 19 mai 2019</b></div>
+																																																													<div style="width:700px;text-align:right;margin:100"></div></div>
